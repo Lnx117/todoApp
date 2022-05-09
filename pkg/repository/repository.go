@@ -1,5 +1,9 @@
 package repository
 
+import (
+	"database/sql"
+)
+
 type Authorization interface {
 }
 
@@ -15,6 +19,8 @@ type Repository struct {
 	TodoItem
 }
 
-func NewRepository() *Repository {
+/* Конструктор БД
+Так как работает с БД передаем объект sqlx.DB в качестве аргумента */
+func NewRepository(*sql.DB) *Repository {
 	return &Repository{}
 }
