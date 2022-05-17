@@ -11,6 +11,15 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
+//Названия таблиц в БД
+const (
+	usersTable      = "users"
+	todoListsTable  = "todo_lists"
+	usersListsTable = "users_lists"
+	todoItemsTable  = "todo_items"
+	listsItemsTable = "lists_items"
+)
+
 type Config struct {
 	Host     string
 	Port     string
@@ -31,8 +40,6 @@ func NewMysqlDB(cfg Config) (*sql.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	defer db.Close()
 
 	return db, nil
 }
