@@ -22,9 +22,6 @@ type Repository struct {
 	TodoItem
 }
 
-/* Конструктор БД
-Так как работает с БД передаем объект sqlx.DB в качестве аргумента
-В поле Authorization может быть любой объект реализующий этот интерфейс */
 func NewRepository(db *sql.DB) *Repository {
 	return &Repository{
 		Authorization: NewAuthMysql(db),

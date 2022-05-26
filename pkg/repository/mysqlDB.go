@@ -1,7 +1,3 @@
-/* Подключение к БД
-Используется стандартная либа sql
-Создаем объект с конфигом и передаем в функцию которая создает подключение */
-
 package repository
 
 import (
@@ -11,7 +7,6 @@ import (
 	_ "github.com/go-sql-driver/mysql"
 )
 
-//Названия таблиц в БД
 const (
 	usersTable      = "users"
 	todoListsTable  = "todo_lists"

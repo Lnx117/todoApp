@@ -10,12 +10,10 @@ type Handler struct {
 	services *service.Service
 }
 
-//конструктор объекта сервиса
 func NewHandler(services *service.Service) *Handler {
 	return &Handler{services: services}
 }
 
-//Инициализация роутов с помощью фреймворка gin
 func (h *Handler) InitRoutes() *gin.Engine {
 	router := gin.New()
 

@@ -30,37 +30,29 @@ func NewAuthService(repo repository.Authorization) *AuthService {
 	return &AuthService{repo: repo}
 }
 
-//Создаем метод объекта который получает данные в виде todo.User и дальше уже сам работает с репозиторием
 func (s *AuthService) CreateUser(user todo.User) (int, error) {
 	user.Password = generatePasswordHash(user.Password)
 	return s.repo.CreateUser(user)
 }
 
 func (s *AuthService) GenerateToken(username, password string) (string, error) {
-	//проверяем пользователя
 	id, err := s.repo.GetUser(username, generatePasswordHash(password))
 	if err != nil {
 		return "", err
 	}
 
-	//если все ок то генерируем токе
 	token := jwt.NewWithClaims(jwt.SigningMethodHS256, &tokenClaims{
 		jwt.StandardClaims{
-			//время действия токена
 			ExpiresAt: time.Now().Add(tokenTTL).Unix(),
-			//время создания токена
-			IssuedAt: time.Now().Unix(),
+			IssuedAt:  time.Now().Unix(),
 		},
-		//то что мы шифруем в токене
 		id,
 	})
 
-	//возращаем токен
 	return token.SignedString([]byte(signingKey))
 }
 
 func (s *AuthService) ParseToken(accessToken string) (int, error) {
-	//Используем либу чтобы распарсить токен в объект tokenClaims
 	token, err := jwt.ParseWithClaims(accessToken, &tokenClaims{}, func(token *jwt.Token) (interface{}, error) {
 		if _, ok := token.Method.(*jwt.SigningMethodHMAC); !ok {
 			return nil, errors.New("invalid signing method")

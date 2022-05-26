@@ -10,7 +10,6 @@ type AuthMysql struct {
 	db *sql.DB
 }
 
-//конструктор
 func NewAuthMysql(db *sql.DB) *AuthMysql {
 	return &AuthMysql{db}
 }
